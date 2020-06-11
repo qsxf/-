@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <style>
+        body {
+            margin: 20px auto;
+        }
+        .layui-form-label {
+            width: 135px;
+        }
+        .layui-form-item {
+            margin-bottom: 5px;
+        }
+        .layui-form-item .layui-input-inline {
+             margin-right: 0px;
+        }
+        .layui-btn {
+            border-radius: 6px;
+        }
+
+    </style>
+</head>
+<body>
+
+<form class="layui-form" action="" lay-filter="gqjgForm" id="gqjgForm">
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span style="color:red">*</span>线缆名称：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="cableName" maxlength="255"   autocomplete="off" class="layui-input" lay-verify="required" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span style="color:red">*</span>首尾带电设备端口：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="equipmentPort" maxlength="255"   autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span style="color:red">*</span>上下联配线架端口：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="rackPort" maxlength="255"   autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span style="color:red">*</span>面板号：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="panelId" maxlength="255"   autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span style="color:red">*</span>接口类型：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="interfaceClass" maxlength="255"   autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span style="color:red">*</span>长度（米）：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="length" maxlength="10"   autocomplete="off" class="layui-input" lay-verify="number">
+        </div>
+    </div>
+
+
+    <div style="height: 30px;text-align: center;margin-top: 30px;">
+        <button type="submit" class="layui-btn" lay-submit lay-filter="btSubmit" data-type="">确定</button>
+        <button  class="layui-btn layui-btn-primary" id="closeId">关闭</button>
+    </div>
+
+</form>
+
+
+<script src="../../layui/layui.js"></script>
+<script src="../../js/jquery-3.3.1.min.js"></script>
+<script src="../../js/common.js"></script>
+<script>
+
+    let param = new URLSearchParams(location.search);
+
+    const cid = param.get('id');
+    const but = param.get('but');
+    const userName = param.get('userName');
+
+    const val1 = param.get('val1');
+    const val2 = param.get('val2');
+    const val3 = param.get('val3');
+    const val4 = param.get('val4');
+    const val5= param.get('val5');
+    const val6 = param.get('val6');
+    layui.use(['form', 'layedit', 'laydate','element'], function () {
+        var form = layui.form;
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#registerTime'
+            ,showBottom: false
+        });
+
+
+        if (but=='edit'){
+            form.val('gqjgForm', {
+                "cableName":val1,
+                "equipmentPort":val2,
+                "rackPort":val3,
+                "panelId":val4,
+                "interfaceClass":val5,
+                "length":val6
+            });
+        }
+        form.on('submit(btSubmit)', function(data){
+            var parameter= data.field
+            var indexlod = layer.load(1);
+            var parData = [{"name":"线缆名称","valu1":parameter.cableName,"valu2":val1},
+                {"name":"首尾带电设备端口","valu1":parameter.equipmentPort,"valu2":val2},
+                {"name":"上下联配线架端口","valu1":parameter.rackPort,"valu2":val3},
+                {"name":"面板号","valu1":parameter.panelId,"valu2":val4},
+                {"name":"接口类型","valu1":parameter.interfaceClass,"valu2":val5},
+                {"name":"长度","valu1":parameter.length,"valu2":val6}
+            ];
+            parameter["updateName"]=userName
+            parameter["createName"]=userName
+
+            if (but=='edit'){
+
+                parameter["id"]=cid
+
+                queryData('../../ItInfoData/updetCable.do', parameter, function (red) {
+                    if (red.code =='0' ){
+
+                        var fieldName="";
+                        var fieldAgo='';
+                        var fieldAfter='';
+                        $.each(parData, function () {
+
+                            if (this.valu2!=this.valu1){
+                                fieldName+=this.name+","
+                                fieldAgo+=this.valu2+","
+                                fieldAfter+=this.valu1+","
+                            }
+                        });
+                        if (fieldName!=""){
+                            var strDescr = "字段名称：["+fieldName+"]/改前值："+"["+fieldAgo+"]/改后值：["+fieldAfter+"]"
+                            var param={'operType':'修改','operPage':'光纤网线信息','operTable':'IT_ASSET_CABLE','descr':strDescr,'createName':userName}
+                            queryData('../../log/addlog.do', param, function (redt) {});
+                        }
+
+                        windowclose();
+                    }
+                    layer.msg(red.msg, {icon: 1});
+
+                })
+            } else {
+
+                queryData('../../ItInfoData/addCable.do', parameter, function (red) {
+                    if (red.code =='0' ){
+
+                        var fieldName="";
+                        var fieldAfter='';
+                        $.each(parData, function () {
+
+                            fieldName+=this.name+","
+                            fieldAfter+=this.valu1+","
+                        });
+                        var strDescr = "字段名称：["+fieldName+"]/字段值：["+fieldAfter+"]"
+                        var param={'operType':'新增','operPage':'光纤网线信息','operTable':'IT_ASSET_CABLE','descr':strDescr,'createName':userName}
+                        queryData('../../log/addlog.do', param, function (redt) {});
+
+                        windowclose();
+                    }
+                    layer.msg(red.msg, {icon: 1});
+
+                })
+            }
+
+
+
+            layer.close(indexlod);
+            return false;
+        });
+
+
+        $("#closeId").click(function () {
+            windowclose();
+        });
+
+        function windowclose() {
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            parent.layer.close(index); //再执行关闭
+        }
+
+    })
+</script>
+
+
+</body>
+</html>

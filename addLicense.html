@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>无形资产台账</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <style>
+        body {
+            margin: 20px auto;
+        }
+
+        .layui-form-label {
+            width: 126px;
+        }
+
+        .layui-form-item {
+            margin-bottom: 5px;
+        }
+
+        .layui-form-item .layui-input-inline {
+            margin-right: 0px;
+        }
+
+        .layui-btn {
+            border-radius: 6px;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<form class="layui-form" action="" lay-filter="updateLicenseFrom" id="updateLicenseFrom">
+    <div style="margin-top: 20px">
+        <div class="layui-inline">
+            <label class="layui-form-label">公司名称：</label>
+            <div class="layui-input-inline">
+                <select name="licensecompany" lay-verify="required">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">证书数量：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="licensenum" maxlength="255" autocomplete="off" class="layui-input" lay-verify="required|number">
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 30px;text-align: center;margin-top: 30px;">
+        <button type="submit" class="layui-btn" lay-submit lay-filter="btSubmit" data-type="">确定</button>
+        <button class="layui-btn layui-btn-primary" id="closeId">关闭</button>
+    </div>
+
+</form>
+
+
+<script src="../../layui/layui.js"></script>
+<script src="../../js/jquery-3.3.1.min.js"></script>
+<script src="../../js/common.js"></script>
+<script>
+
+    let param = new URLSearchParams(location.search);
+    const assetsid = param.get('ASSETS_ID');
+
+    layui.use(['form', 'layedit', 'laydate', 'element'], function () {
+        var form = layui.form;
+        var laydate = layui.laydate;
+        form.on('submit(btSubmit)', function (data) {
+            var parameter = data.field;
+            var indexlod = layer.load(1);
+            parameter["assetsId"] = assetsid;
+            queryData('../../intangibleAsset/addLicense.do', parameter, function (red) {
+                if (red.code == '0') {
+                    windowclose();
+                }
+                layer.msg(red.msg, {icon: 1});
+
+            });
+            layer.close(indexlod);
+            return false;
+        });
+
+        $("#closeId").click(function () {
+            windowclose();
+        });
+
+        function windowclose() {
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            parent.layer.close(index); //再执行关闭
+        }
+
+    });
+
+    // 获取对接系统接口
+    $.ajax({
+        url: "../../stockAsset/selBM.do",
+        contentType: "application/json",
+        type: "post",
+        dataType: "json",
+        beforeSend: "",
+        data: JSON.stringify(),
+        success: function (data) {
+            var compnms = [];
+            for (var i = 0; i < data.length; i++) {
+                compnms[i] = data[i].COMPNM;
+            }
+
+            for (var i = 0; i < compnms.length; i++) {
+                for (var j = i + 1; j < compnms.length; j++) {
+                    if (compnms[i] == compnms[j]) {
+                        //如果第一个等于第二个，splice方法删除第二个
+                        compnms.splice(j, 1);
+                        j--;
+                    }
+                }
+            }
+            for (var i = 0; i < data.length; i++) {
+                if (compnms[i] == null) {
+                    return
+                } else {
+                    // 公司
+                    $("#licensecompany").append(new Option(compnms[i]));
+                    // 部门
+                    $("#useDepartment").append("<optgroup label=" + compnms[i] + ">");
+                    for (var j = 0; j < data.length; j++) {
+                        if (compnms[i] == data[j].COMPNM) {
+                            $("#updateLicenseFrom").append(" <option value='" + data[j].NAME + "'>" + data[j].NAME + "</option>");
+                        }
+                    }
+                    $("#updateLicenseFrom").append("</optgroup>");
+                }
+            }
+        }
+    });
+</script>
+
+
+</body>
+</html>

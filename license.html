@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <style>
+        body {
+            margin: 20px auto;
+        }
+        .layui-form-label {
+            width: 126px;
+        }
+        .layui-form-item {
+            margin-bottom: 5px;
+        }
+        .layui-form-item .layui-input-inline {
+             margin-right: 0px;
+        }
+        .layui-btn {
+            border-radius: 6px;
+        }
+
+    </style>
+</head>
+<body>
+
+
+
+<form class="layui-form" action="" lay-filter="gqjgForm" id="gqjgForm" style="margin-left: 5px;">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">公司名称：</label>
+        <div class="layui-input-inline">
+<!--
+            <input type="text" name="LICENSECOMPANY" id="COMPANY" maxlength="255"   autocomplete="off" class="layui-input" lay-verify="required" >
+-->
+            <select name="LICENSECOMPANY" lay-verify="required" id="COMPANY">
+                <option value="">请选择</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">License分配个数：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="LICENSENUM" maxlength="255"   autocomplete="off" class="layui-input" lay-verify="required|number">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+        <div class="layui-input-inline">
+            <input type="text" name="NOLICENSENUM" maxlength="255" disabled="disabled"   style="border-style:none"  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+
+
+    <div style="height: 30px;text-align: center;margin-top: 30px;">
+        <button type="submit" class="layui-btn" lay-submit lay-filter="btSubmit" data-type="">确定</button>
+        <button  class="layui-btn layui-btn-primary" id="closeId">关闭</button>
+    </div>
+
+</form>
+
+
+<script src="../../layui/layui.js"></script>
+<script src="../../js/jquery-3.3.1.min.js"></script>
+<script src="../../js/common.js"></script>
+<script>
+
+    let param = new URLSearchParams(location.search);
+    const cid = param.get('id');
+    const but = param.get('but');
+    const userName = param.get('userName');
+    const ASSETS_ID = param.get('assets_id');
+    const val1 = param.get('val1');
+    const val2 = param.get('val2');
+    const val3 = param.get('val3');
+
+    layui.use(['form', 'layedit', 'laydate','element'], function () {
+        var form = layui.form;
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#registerTime'
+            ,showBottom: false
+        });
+
+
+        $.ajax({
+            url:"../../stockAsset/selBM.do",
+            contentType:"application/json",
+            type:"post",
+            dataType:"json",
+            beforeSend:"",
+            data:JSON.stringify(),
+            success: function(data) {
+                var compnms = [];
+                for (var i=0;i<data.length;i++){
+                    compnms[i] = data[i].COMPNM;
+                }
+
+                for(var i=0;i<compnms.length;i++){
+                    for(var j=i+1;j<compnms.length;j++){
+                        if(compnms[i]==compnms[j]){
+                            //如果第一个等于第二个，splice方法删除第二个
+                            compnms.splice(j,1);
+                            j--;
+                        }
+                    }
+                }
+                for (var i = 0; i <data.length; i++) {
+                    if (compnms[i]==null){
+                        return
+                    }else {
+                        $("#COMPANY").append(new Option(compnms[i] ));
+                        form.render();
+                    }
+                    form.render();
+                }
+
+            }
+
+        });
+
+
+
+        if (but=='edit'){
+
+            form.val('gqjgForm', {
+                 "LICENSENUM":val1
+                ,"LICENSECOMPANY":val2
+                ,"NOLICENSENUM":"License未分配个数：("+(val3=="null"?'0':val3)+")"
+
+            });
+        }else{
+            form.val('gqjgForm', {
+                "NOLICENSENUM":"License未分配个数：("+(val3=="null"?'0':val3)+")"
+
+            });
+        }
+        form.on('submit(btSubmit)', function(data){
+            var parameter= data.field
+            var indexlod = layer.load(1);
+            var parData = [{"name":"公司名称","valu1":parameter.LICENSECOMPANY,"valu2":val1},
+                {"name":"License分配个数","valu1":parameter.LICENSENUM,"valu2":val2},
+                {"name":"无形资产编号","valu1":ASSETS_ID,"valu2":""}
+            ];
+            parameter["uname"]=userName
+            if (parameter.NOLICENSENUM-parameter.LICENSENUM<0){
+                layer.alert('LICENSE个数超出最大数！', {icon: 1});
+                return;
+            }
+            if (but=='edit'){
+                parameter["ID"]=cid
+                queryData('../../inventoryAsset/updetLicense.do', parameter, function (red) {
+                    if (red.code =='0' ){
+
+                        var fieldName="";
+                        var fieldAgo='';
+                        var fieldAfter='';
+                        $.each(parData, function () {
+
+                            if (this.valu2!=this.valu1){
+                                fieldName+=this.name+","
+                                fieldAgo+=this.valu2+","
+                                fieldAfter+=this.valu1+","
+                            }
+                        });
+                        if (fieldName!=""){
+                            var strDescr = "字段名称：["+fieldName+"]/改前值："+"["+fieldAgo+"]/改后值：["+fieldAfter+"]"
+                            var param={'operType':'修改','operPage':'无形资产信息','operTable':'IT_ASSET_LICENSE','descr':strDescr,'createName':userName}
+                            queryData('../../log/addlog.do', param, function (redt) {});
+                        }
+
+                        windowclose();
+                    }
+                    layer.msg(red.msg, {icon: 1});
+
+                })
+            } else {
+                parameter["ASSETS_ID"]=ASSETS_ID
+                queryData('../../inventoryAsset/addLicense.do', parameter, function (red) {
+                    if (red.code =='0' ){
+
+                        var fieldName="";
+                        var fieldAfter='';
+                        $.each(parData, function () {
+
+                            fieldName+=this.name+","
+                            fieldAfter+=this.valu1+","
+                        });
+                        var strDescr = "字段名称：["+fieldName+"]/字段值：["+fieldAfter+"]"
+                        var param={'operType':'新增','operPage':'无形资产信息','operTable':'IT_ASSET_LICENSE','descr':strDescr,'createName':userName}
+                        queryData('../../log/addlog.do', param, function (redt) {});
+
+                        windowclose();
+                    }
+                    layer.msg(red.msg, {icon: 1});
+
+                })
+            }
+
+
+
+            layer.close(indexlod);
+            return false;
+        });
+
+
+        $("#closeId").click(function () {
+            windowclose();
+        });
+
+        function windowclose() {
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            parent.layer.close(index); //再执行关闭
+        }
+
+    })
+</script>
+
+
+</body>
+</html>

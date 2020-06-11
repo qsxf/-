@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>资产报废</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link id="layuicss-laydate" rel="stylesheet" href="../../layui/css/modules/laydate/default/laydate.css" media="all">
+    <link id="layuicss-layer" rel="stylesheet" href="../../layui/css/modules/layer/default/layer.css?v=3.1.1" media="all">
+    <style>
+        body{
+            /*margin-top: 15px;*/
+           /* margin-left: 10px;*/
+            /*margin-right: 50px;*/
+            /*background-color: #f5f6fa !important;*/
+            border-color: #F2F2F2;
+            background-color: #F2F2F2;
+        }
+
+        .divradio .layui-form-radio >i{
+            margin-right: 5px;
+            font-size: 16px;
+        }
+        .layui-input, .layui-textarea {
+         display: block;
+        width: 200px;
+        padding-left: 10px;
+        }
+
+        .layui-btn {
+            display: inline-block;
+            height: 32px;
+            line-height: 32px;
+            border-radius: 6px;
+        }
+        /*.layui-btn {*/
+
+        /*height: 35px;*/
+        /*line-height: 35px;*/
+        /*padding: 0 11px;*/
+        /*font-size: 13px;*/
+        /*}*/
+
+        .layui-input-block {
+            margin-left: 95px;
+            min-height: 40px;
+        }
+
+        .layui-form-label {
+            padding: 7px 5px;
+            width: 85px;
+        }
+        .layui-input-inline {
+            min-height: 40px;
+        }
+    </style>
+</head>
+<body>
+<div style="margin-top: 40px;margin-left: 30px">
+    <i style="font-size: 24px;font-weight: bold;font-family: SimHei;font-style: normal">新增报废资产</i>
+</div>
+<div style="padding: 20px;">
+    <div class="layui-row layui-col-space15">
+        <div class="" >
+            <div class="layui-card" style="border: solid 2px #8D8D8D;width: 100%">
+
+                <div class="layui-card-body" style="margin-top: 20px;margin-left: 20px;">
+                    <form class="layui-form" action="" lay-filter="upFrom"    id="upFrom">
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>资产编号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="zcbh" disabled="readonly" lay-verify="required" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>资产名称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="zcmc" disabled="readonly" lay-verify="required" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>一级分类：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="yjfl" disabled="readonly" lay-verify="required" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>二级分类：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="ejfl" disabled="readonly" lay-verify="required" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+
+                            <div class="layui-inline" >
+                                <label class="layui-form-label"><span style="color:red">*</span>报废编号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="bfbh"  lay-verify="required" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+                            <div class="layui-inline" >
+                                <label class="layui-form-label"><span style="color:red">*</span>报废时间：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="bfsj" id="bfsj" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline" >
+                                <label class="layui-form-label"><span style="color:red">*</span>报废原因：</label>
+                                <div class="layui-input-inline">
+<!--
+                                    <input type="text" name="bfyy" lay-verify="required" autocomplete="off" class="layui-input"  placeholder="请输入">
+-->
+                                    <textarea placeholder="请输入" lay-verify="required" name="bfyy" class="layui-textarea" ></textarea>
+                                </div>
+                            </div>
+
+                        <div class="layui-form-item" style="text-align: center;margin-top: 30px">
+                            <div class="layui-input-block">
+                                <button type="submit" class="layui-btn" lay-submit lay-filter="reSubmit" data-type="">保存</button>
+                                <button type="button" class="layui-btn layui-btn-primary" data-type="cancel" id="cancel">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script src="../../layui/lay/modules/table.js"></script>
+<script src="../../js/jquery-3.3.1.min.js"></script>
+<script src="../../layui/lay/modules/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../layui/lay/modules/laydate.js"></script>
+<script>
+
+    layui.use(['element'], function(){
+        var element = layui.element;
+
+    });
+</script>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function() {
+
+        let param = new URLSearchParams(location.search);
+        // const userName = param.get('userName');
+
+        const val1 = param.get('val1');
+        const val2 = param.get('val2');
+        const val3 = param.get('val3');
+        const val4 = param.get('val4');
+        const val5 = param.get('val5');
+        const val6 = param.get('val6');
+        const val7 = param.get('val7');
+        const val8 = param.get('userName');
+        var laydate = layui.laydate;
+        var form = layui.form;
+
+        /*var $ = layui.$, active = {
+            cancel: function () {
+                window.location.href = "../fixAsset.jsp?user=" + val8;
+
+            },
+        }*/
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        $('#cancel').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        laydate.render({
+            elem: '#bfsj' //指定元素
+            ,showBottom: false
+        });
+        /*        laydate.render({
+                    elem: '#date2' //指定元素
+                    ,showBottom: false
+                });*/
+
+        form.val('upFrom', {
+            "zcbh":val1,
+            "zcmc":val2,
+            "yjfl":val3,
+            "ejfl":val4,
+            "brand":val5,
+            "typename":val6
+        });
+
+        form.on('submit(reSubmit)', function (data) {
+            var parameter = data.field
+            var indexlod = layer.load(1);
+            var parData = [{"name":"资产编号","valu1":parameter.zcbh},
+                {"name":"报废编号","valu1":parameter.bfbh},
+                {"name":"报废时间","valu1":parameter.bfsj},
+                {"name":"报废原因","valu1":parameter.bfyy}
+            ];
+            parameter["ID"]=val7;
+            parameter["uname"]=val8;
+            queryData('../../fixAsset/addDumpAsset.do', parameter, function (red) {
+                if (red.code == '0') {
+
+                    var fieldName="";
+                    var fieldAfter='';
+                    $.each(parData, function () {
+
+                        fieldName+=this.name+","
+                        fieldAfter+=this.valu1+","
+                    });
+                    var strDescr = "字段名称：["+fieldName+"]/字段值：["+fieldAfter+"]"
+                    var param={'operType':'新增','operPage':'资产报废信息','operTable':'IT_ASSET_DUMPASSET','descr':strDescr,'createName':val8}
+                    queryData('../../log/addlog.do', param, function (redt) {});
+
+                    layer.alert(red.msg, {icon: 1});
+                    //window.location.href = "../fixAsset.jsp?user=" + val8;
+                    windowclose();
+                   // $(window).attr('location',"../fixAsset.jsp");
+                }
+
+
+            })
+
+
+            layer.close(indexlod);
+            return false;
+        });
+
+    });
+    $("#cancel").click(function () {
+        windowclose();
+    });
+    function windowclose() {
+        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        parent.layer.close(index); //再执行关闭
+    }
+   /* $(function(){
+        $("#cancel").click(function(){
+            $(window).attr('location',"../fixAsset.jsp");
+        });
+    });*/
+</script>
+</html>

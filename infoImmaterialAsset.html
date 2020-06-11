@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>无形资产台账</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link id="layuicss-laydate" rel="stylesheet" href="../../layui/css/modules/laydate/default/laydate.css" media="all">
+    <link id="layuicss-layer" rel="stylesheet" href="../../layui/css/modules/layer/default/layer.css?v=3.1.1" media="all">
+    <style>
+        body{
+            /*margin-top: 15px;*/
+           /* margin-left: 10px;*/
+            /*margin-right: 50px;*/
+            /*background-color: #f5f6fa !important;*/
+            border-color: #F2F2F2;
+            background-color: #F2F2F2;
+        }
+
+        .divradio .layui-form-radio >i{
+            margin-right: 5px;
+            font-size: 16px;
+        }
+        .layui-input, .layui-textarea {
+         display: block;
+        width: 200px;
+        padding-left: 10px;
+        }
+
+        .layui-btn {
+            display: inline-block;
+            height: 32px;
+            line-height: 32px;
+            border-radius: 6px;
+        }
+        /*.layui-btn {*/
+
+        /*height: 35px;*/
+        /*line-height: 35px;*/
+        /*padding: 0 11px;*/
+        /*font-size: 13px;*/
+        /*}*/
+
+        .layui-input-block {
+            margin-left: 95px;
+            min-height: 40px;
+        }
+
+        .layui-form-label {
+            padding: 7px 5px;
+            width: 112px;
+        }
+        .layui-input-inline {
+            min-height: 40px;
+        }
+        .layui-hide {
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+<div style="margin-top: 40px;margin-left: 30px">
+    <i style="font-size: 24px;font-weight: bold;font-family: SimHei;font-style: normal">查看无形资产</i>
+</div>
+<div style="padding: 20px;">
+    <div class="layui-row layui-col-space15">
+        <div class="" >
+            <div class="layui-card" style="border: solid 2px #8D8D8D;width: 100%">
+
+                <div class="layui-card-body" style="margin-top: 20px">
+                    <form class="layui-form" action="">
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">软件编号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">软件名称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">软件分类：</label>
+                                <div class="layui-input-inline">
+                                    <!-- <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input" style="width: 211px">-->
+                                    <select name="modules" lay-verify="required">
+                                        <option value="">请选择</option>
+                                        <option value="1">layer</option>
+                                        <option value="2">form</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">品牌：</label>
+                                <div class="layui-input-inline">
+                                    <!-- <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input" style="width: 211px">-->
+                                    <select name="modules" lay-verify="required">
+                                        <option value="">请选择</option>
+                                        <option value="1">layer</option>
+                                        <option value="2">form</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">数量：</label>
+                                <div class="layui-input-inline">
+                                    <!-- <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input" style="width: 211px">-->
+                                    <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">license期限：</label>
+                                <div class="layui-input-inline">
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="date" id="date1" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">license个数：</label>
+                                <div class="layui-input-inline">
+                                    <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">采购单位：</label>
+                                <div class="layui-input-inline">
+                                    <!-- <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input" style="width: 211px">-->
+                                    <select name="modules" lay-verify="required">
+                                        <option value="">请选择</option>
+                                        <option value="1">layer</option>
+                                        <option value="2">form</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">使用单位：</label>
+                                <div class="layui-input-inline">
+                                    <!-- <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input" style="width: 211px">-->
+                                    <select name="modules" lay-verify="required">
+                                        <option value="">请选择</option>
+                                        <option value="1">layer</option>
+                                        <option value="2">form</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">购买价格（元）：</label>
+                                <div class="layui-input-inline">
+                                    <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">归属公司：</label>
+                                <div class="layui-input-inline">
+                                    <!-- <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input" style="width: 211px">-->
+                                    <select name="modules" lay-verify="required">
+                                        <option value="">请选择</option>
+                                        <option value="1">layer</option>
+                                        <option value="2">form</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">责任人：</label>
+                                <div class="layui-input-inline">
+                                    <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+
+                            <div class="layui-inline" >
+                                <label class="layui-form-label">入账日期：</label>
+                                <div class="layui-input-inline">
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="date" id="date3" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline" >
+                                <label class="layui-form-label">购买日期：</label>
+                                <div class="layui-input-inline">
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="date" id="date4" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline"  >
+                                <label class="layui-form-label">备注：</label>
+                                <div class="layui-input-inline" >
+                                    <div class="layui-input-inline">
+                                        <textarea placeholder="请输入" class="layui-textarea"  ></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="layui-inline" style="margin-top: 0px">
+                                <label class="layui-form-label">License分配：</label>
+                                <div class="layui-input-inline" >
+                                    <table class="layui-hide"  id="user"  lay-filter="user"></table>
+                                </div>
+                            </div>
+
+                        <!--<div class="layui-form-item layui-form-text">
+                          <label class="layui-form-label">编辑器</label>
+                          <div class="layui-input-block">
+                            <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
+                          </div>
+                        </div>-->
+                        <div class="layui-form-item" style="text-align: center;margin-top: 30px">
+                            <div class="layui-input-block">
+                               <!-- <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>-->
+                                <button type="reset" class="layui-btn layui-btn-primary" id="cancel">返回</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script src="../../layui/lay/modules/table.js"></script>
+<script src="../../js/jquery-3.3.1.min.js"></script>
+<script src="../../layui/lay/modules/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/immaterialAsset/infoImmaterialAsset.js"></script>
+<script src="../../layui/lay/modules/laydate.js"></script>
+<script>
+
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+</script>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#date1' //指定元素
+        });
+        laydate.render({
+            elem: '#date2' //指定元素
+        });
+        laydate.render({
+            elem: '#date3' //指定元素
+        });
+        laydate.render({
+            elem: '#date4' //指定元素
+        });
+    });
+    $(function(){
+        $("#cancel").click(function(){
+            //$(window).attr('location',"${pageContext.request.contextPath }/tp/addTp");
+            $(window).attr('location',"../immaterialAsset.html");
+        });
+    });
+</script>
+<script>
+    infoLicense()
+</script>
+</html>

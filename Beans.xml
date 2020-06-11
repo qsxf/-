@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+
+
+          http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context-3.2.xsd"
+       default-lazy-init="false" default-autowire="byName">
+	<!--	配置自动扫描包-->
+	<context:component-scan base-package="com.spring">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+	</context:component-scan>
+	<bean id="jdbcConfig"  
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+        <property name="locations">  
+            <list>  
+                <value>classpath:jdbc.properties</value>               
+            </list>  
+        </property>  
+    </bean>
+   <!--创建数据源1，连接数据库——社区事务受理中心 -->
+<bean id="dataSource1" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="${db1.driver}" />
+    <property name="url" value="${db1.url}" />
+    <property name="username" value="${db1.username}" />
+    <property name="password" value="${db1.password}" />
+    <property name="testOnBorrow" value="false" />        
+       <property name="testWhileIdle" value="true" />     
+         <!-- 连接池启动时的初始值   -->
+  <property name="initialSize" value="10" />  
+<!--   连接池的最大值   -->
+  <property name="maxActive" value="100" />  
+ <!--  最大空闲值.当经过一个高峰时间后，连接池可以慢慢将已经用不到的连接慢慢释放一部分，一直减少到maxIdle为止   -->
+  <property name="maxIdle" value="50" />  
+  <!-- 最小空闲值.当空闲的连接数少于阀值时，连接池就会预申请去一些连接，以免洪峰来时来不及申请   -->
+  <property name="minIdle" value="10" />  
+ <!--  #给出一条简单的sql语句进行验证 -->  
+  <property name="validationQuery" value="select 1 from dual" />  
+ <!--  #在取出连接时进行有效验证   -->
+  <property name="removeAbandonedTimeout" value="1200000" />  
+  <property name="removeAbandoned" value="true" />  
+  <!-- #运行判断连接超时任务的时间间隔，单位为毫秒，默认为-1，即不执行任务。   -->
+  <property name="timeBetweenEvictionRunsMillis" value="1200000" />  
+  <!-- #连接的超时时间，默认为半小时。   -->
+  <property name="minEvictableIdleTimeMillis" value="1200000" />    
+</bean>
+<!--创建数据源2，星环 -->
+<!--<bean id="dataSource2" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="${db2.driver}" />
+    <property name="url" value="${db2.url}" />
+    <property name="username" value="${db2.username}" />
+    <property name="password" value="${db2.password}" />
+    &lt;!&ndash; <property name="removeAbandoned" value="${db1.removeAbandoned}" />
+    <property name="removeAbandonedTimeout" value="${db1.removeAbandonedTimeout}" />  &ndash;&gt;
+    <property name="testOnBorrow" value="false" />        
+       <property name="testWhileIdle" value="true" />     
+         &lt;!&ndash; 连接池启动时的初始值 &ndash;&gt;
+  <property name="initialSize" value="10" />  
+  &lt;!&ndash; 连接池的最大值 &ndash;&gt;
+  <property name="maxActive" value="100" />  
+  &lt;!&ndash; 最大空闲值.当经过一个高峰时间后，连接池可以慢慢将已经用不到的连接慢慢释放一部分，一直减少到maxIdle为止 &ndash;&gt;
+  <property name="maxIdle" value="50" />  
+  &lt;!&ndash; 最小空闲值.当空闲的连接数少于阀值时，连接池就会预申请去一些连接，以免洪峰来时来不及申请 &ndash;&gt;
+  <property name="minIdle" value="10" />  
+  &lt;!&ndash;#给出一条简单的sql语句进行验证&ndash;&gt;
+  <property name="validationQuery" value="select count(*) from corp_info" />  
+  &lt;!&ndash;#在取出连接时进行有效验证&ndash;&gt;
+  <property name="removeAbandonedTimeout" value="120" />  
+  <property name="removeAbandoned" value="true" />  
+  &lt;!&ndash; #运行判断连接超时任务的时间间隔，单位为毫秒，默认为-1，即不执行任务。 &ndash;&gt;
+  <property name="timeBetweenEvictionRunsMillis" value="3600000" />  
+  &lt;!&ndash; #连接的超时时间，默认为半小时。 &ndash;&gt;
+  <property name="minEvictableIdleTimeMillis" value="3600000" />    
+</bean>-->
+
+
+
+
+   <!-- Definition for JDBCTemplate bean -->
+   <bean id="qstb_jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+      <property name="dataSource">
+			<ref local="dataSource1" />
+		</property>
+   </bean>
+   <!--<bean id="hadoop_jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+      <property name="dataSource">
+			<ref local="dataSource2" />
+		</property>
+   </bean>-->
+
+   </beans>
+      

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <style>
+        body {
+            margin: 20px auto;
+        }
+        .layui-form-label {
+            width: 126px;
+        }
+        .layui-form-item {
+            margin-bottom: 5px;
+        }
+        .layui-inline {
+            margin-bottom: 5px;
+        }
+        .layui-form-item .layui-input-inline {
+             margin-right: 0px;
+        }
+        .layui-btn {
+            border-radius: 6px;
+        }
+
+    </style>
+</head>
+<body>
+
+<form class="layui-form" action="" lay-filter="gqjgForm" id="gqjgForm">
+
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>设备名称：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="eutName" maxlength="255"   autocomplete="off" class="layui-input" lay-verify="required" >
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>设备序列号：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="eutId" maxlength="255"   autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>设备类别：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="eupClass" maxlength="255"   autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>厂商名称：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="storeName" maxlength="255"   autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>购买日期：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="buyTime"  class="layui-input" autocomplete="off" id="gmdate" placeholder="yyyy-MM-dd" lay-verify="required">
+        </div>
+
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>出保日期：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="exitinsurTime"  class="layui-input" autocomplete="off" id="bcdate" placeholder="yyyy-MM-dd" lay-verify="required">
+        </div>
+
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>设备型号：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="eupModel" maxlength="255"   autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>设备DRAM大小：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="dramSize" maxlength="10"   autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>设备FLASH大小：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="flashSize" maxlength="10"   autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+
+
+
+
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>设备所在机柜：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="cabinet" maxlength="10"   autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>所在U位：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="uBit" maxlength="10"   autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>设备状态描述：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="stateDescription" maxlength="10"   autocomplete="off" class="layui-input" >
+        </div>
+    </div>
+
+
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>设备管理员：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="admin" maxlength="10"   autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>IP地址：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="ip" maxlength="10"   autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <label class="layui-form-label">备注：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="remark" maxlength="10"   autocomplete="off" class="layui-input" >
+        </div>
+    </div>
+    <div style="height: 30px;text-align: center;margin-top: 30px;">
+        <button type="submit" class="layui-btn" lay-submit lay-filter="btSubmit" data-type="">确定</button>
+        <button  class="layui-btn layui-btn-primary" id="closeId">关闭</button>
+    </div>
+
+</form>
+
+
+<script src="../../layui/layui.js"></script>
+<script src="../../js/jquery-3.3.1.min.js"></script>
+<script src="../../js/common.js"></script>
+<script>
+
+    let param = new URLSearchParams(location.search);
+    // const pid = param.get('pid');
+    const cid = param.get('id');
+    const but = param.get('but');
+    const userName = param.get('userName');
+
+    const val1 = param.get('val1');
+    const val2 = param.get('val2');
+    const val3 = param.get('val3');
+    const val4 = param.get('val4');
+    const val5 = param.get('val5');
+    const val6 = param.get('val6');
+    const val7 = param.get('val7');
+    const val8 = param.get('val8');
+    const val9 = param.get('val9');
+    const val10 = param.get('val10');
+    const val11 = param.get('val11');
+    const val12 = param.get('val12');
+    const val13 = param.get('val13');
+    const val14 = param.get('val14');
+    const val15 = param.get('val15');
+
+    layui.use(['form', 'layedit', 'laydate','element'], function () {
+        var form = layui.form;
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#gmdate'
+            ,showBottom: false
+        });
+        laydate.render({
+            elem: '#bcdate'
+            ,showBottom: false
+        });
+
+        if (but=='edit'){
+            form.val('gqjgForm', {
+
+                "eutId":val1,
+                "eutName":val2,
+                "eupClass":val3,
+                "storeName":val4,
+                "eupModel":val5,
+                "dramSize":val6,
+                "flashSize":val7,
+                "buyTime":val8,
+                "exitinsurTime":val9,
+                "cabinet":val10,
+                "uBit":val11,
+                "stateDescription":val12,
+                "admin":val13,
+                "ip":val14,
+                "remark":val15
+            });
+        }
+        form.on('submit(btSubmit)', function(data){
+            var parameter= data.field
+            var indexlod = layer.load(1);
+            var parData = [{"name":"设备序列号","valu1":parameter.eutId,"valu2":val1},
+                {"name":"设备名称","valu1":parameter.eutName,"valu2":val2},
+                {"name":"设备类别","valu1":parameter.eupClass,"valu2":val3},
+                {"name":"厂商名称","valu1":parameter.storeName,"valu2":val4},
+                {"name":"设备型号","valu1":parameter.eupModel,"valu2":val5},
+                {"name":"设备DRAM大小","valu1":parameter.dramSize,"valu2":val6},
+                {"name":"设备FLASH大小","valu1":parameter.flashSize,"valu2":val7},
+                {"name":"购买日期","valu1":parameter.buyTime,"valu2":val8},
+                {"name":"出保日期","valu1":parameter.exitinsurTime,"valu2":val9},
+                {"name":"设备所在机柜","valu1":parameter.cabinet,"valu2":val10},
+                {"name":"所在U位","valu1":parameter.uBit,"valu2":val11},
+                {"name":"设备状态描述","valu1":parameter.stateDescription,"valu2":val12},
+                {"name":"设备管理员","valu1":parameter.admin,"valu2":val13},
+                {"name":"IP地址","valu1":parameter.ip,"valu2":val14},
+                {"name":"备注","valu1":parameter.remark,"valu2":val15},
+            ];
+            parameter["updateName"]=userName
+            parameter["createName"]=userName
+
+            if (but=='edit'){
+
+                parameter["id"]=cid
+
+                queryData('../../ItInfoData/updetNetequipment.do', parameter, function (red) {
+                    if (red.code =='0' ){
+
+                        var fieldName="";
+                        var fieldAgo='';
+                        var fieldAfter='';
+                        $.each(parData, function () {
+
+                            if (this.valu2!=this.valu1){
+                                fieldName+=this.name+","
+                                fieldAgo+=this.valu2+","
+                                fieldAfter+=this.valu1+","
+                            }
+                        });
+                        if (fieldName!=""){
+                            var strDescr = "字段名称：["+fieldName+"]/改前值："+"["+fieldAgo+"]/改后值：["+fieldAfter+"]"
+                            var param={'operType':'修改','operPage':'网络设备信息','operTable':'IT_ASSET_NETEQUIPMENT','descr':strDescr,'createName':userName}
+                            queryData('../../log/addlog.do', param, function (redt) {});
+                        }
+
+                        windowclose();
+                    }
+                    layer.msg(red.msg, {icon: 1});
+
+                })
+            } else {
+                queryData('../../ItInfoData/addNetequipment.do', parameter, function (red) {
+                    if (red.code =='0' ){
+
+
+                        var fieldName="";
+                        var fieldAfter='';
+                        $.each(parData, function () {
+
+                            fieldName+=this.name+","
+                            fieldAfter+=this.valu1+","
+                        });
+                        var strDescr = "字段名称：["+fieldName+"]/字段值：["+fieldAfter+"]"
+                        var param={'operType':'新增','operPage':'网络设备信息','operTable':'IT_ASSET_NETEQUIPMENT','descr':strDescr,'createName':userName}
+                        queryData('../../log/addlog.do', param, function (redt) {});
+                        windowclose();
+                    }
+                    layer.msg(red.msg, {icon: 1});
+
+                })
+            }
+
+
+
+            layer.close(indexlod);
+            return false;
+        });
+
+
+        $("#closeId").click(function () {
+            windowclose();
+        });
+
+        function windowclose() {
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            parent.layer.close(index); //再执行关闭
+        }
+
+    })
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <style>
+        body {
+            margin: 20px auto;
+        }
+        .layui-form-label {
+            width: 126px;
+        }
+        .layui-form-item {
+            margin-bottom: 5px;
+        }
+        .layui-form-item .layui-input-inline {
+             margin-right: 0px;
+        }
+        .layui-btn {
+            border-radius: 6px;
+        }
+
+    </style>
+</head>
+<body>
+
+
+
+<form class="layui-form" action="" lay-filter="gqjgForm" id="gqjgForm">
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">分红时间：</label>-->
+        <!--<div class="layui-input-inline">-->
+            <!--<input type="text" name="abonusDate"  class="layui-input" autocomplete="off" id="registerTime" placeholder="yyyy-MM-dd" lay-verify="required">-->
+        <!--</div>-->
+        <!--<i class="i-ioc">*</i>-->
+    <!--</div>-->
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span style="color:red">*</span>配线架名称：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="disName" maxlength="255"   autocomplete="off" class="layui-input" lay-verify="required" >
+        </div>
+    </div>
+
+
+
+
+    <div style="height: 30px;text-align: center;margin-top: 30px;">
+        <button type="submit" class="layui-btn" lay-submit lay-filter="btSubmit" data-type="">确定</button>
+        <button  class="layui-btn layui-btn-primary" id="closeId">关闭</button>
+    </div>
+
+</form>
+
+
+<script src="../../layui/layui.js"></script>
+<script src="../../js/jquery-3.3.1.min.js"></script>
+<script src="../../js/common.js"></script>
+<script>
+
+    let param = new URLSearchParams(location.search);
+
+    const cid = param.get('id');
+    const but = param.get('but');
+    const userName = param.get('userName');
+
+    const val1 = param.get('val1');
+
+
+    layui.use(['form', 'layedit', 'laydate','element'], function () {
+        var form = layui.form;
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#registerTime'
+            ,showBottom: false
+        });
+
+
+        if (but=='edit'){
+            form.val('gqjgForm', {
+                "disName": val1
+
+
+            });
+        }
+        form.on('submit(btSubmit)', function(data){
+            var parameter= data.field
+            var indexlod = layer.load(1);
+
+            var parData = [{"name":"配线架名称","valu1":parameter.disName,"valu2":val1}
+            ];
+
+            parameter["crName"]=userName
+            parameter["upName"]=userName
+
+            if (but=='edit'){
+
+                parameter["id"]=cid
+
+                queryData('../../ItInfoData/updetDistribution.do', parameter, function (red) {
+                    if (red.code =='0' ){
+
+                        var fieldName="";
+                        var fieldAgo='';
+                        var fieldAfter='';
+                        $.each(parData, function () {
+
+                            if (this.valu2!=this.valu1){
+                                fieldName+=this.name+","
+                                fieldAgo+=this.valu2+","
+                                fieldAfter+=this.valu1+","
+                            }
+                        });
+                        if (fieldName!=""){
+                            var strDescr = "字段名称：["+fieldName+"]/改前值："+"["+fieldAgo+"]/改后值：["+fieldAfter+"]"
+                            var param={'operType':'修改','operPage':'配线架信息','operTable':'IT_ASSET_DISTRIBUTION','descr':strDescr,'createName':userName}
+                            queryData('../../log/addlog.do', param, function (redt) {});
+                        }
+
+                        windowclose();
+                    }
+                    layer.msg(red.msg, {icon: 1});
+
+                })
+            } else {
+
+                queryData('../../ItInfoData/addDistribution.do', parameter, function (red) {
+                    if (red.code =='0' ){
+
+                        var fieldName="";
+                        var fieldAfter='';
+                        $.each(parData, function () {
+
+                            fieldName+=this.name+","
+                            fieldAfter+=this.valu1+","
+                        });
+                        var strDescr = "字段名称：["+fieldName+"]/字段值：["+fieldAfter+"]"
+                        var param={'operType':'新增','operPage':'配线架信息','operTable':'IT_ASSET_DISTRIBUTION','descr':strDescr,'createName':userName}
+                        queryData('../../log/addlog.do', param, function (redt) {});
+
+                        windowclose();
+                    }
+                    layer.msg(red.msg, {icon: 1});
+
+                })
+            }
+
+
+
+            layer.close(indexlod);
+            return false;
+        });
+
+
+        $("#closeId").click(function () {
+            windowclose();
+        });
+
+        function windowclose() {
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            parent.layer.close(index); //再执行关闭
+        }
+
+    })
+</script>
+
+
+</body>
+</html>
