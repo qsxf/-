@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>资产入库</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link id="layuicss-laydate" rel="stylesheet" href="../../layui/css/modules/laydate/default/laydate.css" media="all">
+    <link id="layuicss-layer" rel="stylesheet" href="../../layui/css/modules/layer/default/layer.css?v=3.1.1" media="all">
+    <style>
+        body{
+            /*margin-top: 15px;*/
+           /* margin-left: 10px;*/
+            /*margin-right: 50px;*/
+            /*background-color: #f5f6fa !important;*/
+            border-color: #F2F2F2;
+            background-color: #F2F2F2;
+        }
+
+        .divradio .layui-form-radio >i{
+            margin-right: 5px;
+            font-size: 16px;
+        }
+        .layui-input, .layui-textarea {
+         display: block;
+        width: 200px;
+        padding-left: 10px;
+        }
+
+        .layui-btn {
+            display: inline-block;
+            height: 32px;
+            line-height: 32px;
+            border-radius: 6px;
+        }
+        /*.layui-btn {*/
+
+        /*height: 35px;*/
+        /*line-height: 35px;*/
+        /*padding: 0 11px;*/
+        /*font-size: 13px;*/
+        /*}*/
+
+        .layui-input-block {
+            margin-left: 95px;
+            min-height: 40px;
+        }
+
+        .layui-form-label {
+            padding: 7px 5px;
+            width: 112px;
+        }
+        .layui-input-inline {
+            min-height: 40px;
+        }
+    </style>
+</head>
+<body>
+<div style="margin-top: 40px;margin-left: 30px">
+    <i style="font-size: 24px;font-weight: bold;font-family: SimHei;font-style: normal">编辑入库信息</i>
+</div>
+<div style="padding: 20px;">
+    <div class="layui-row layui-col-space15">
+        <div class="" >
+            <div class="layui-card" style="border: solid 2px #8D8D8D;width:100%">
+
+                <div class="layui-card-body" style="margin-top: 20px">
+                    <form class="layui-form" action="" lay-filter="upFrom"    id="upFrom">
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>资产编号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="ASSETS_ID" lay-verify="required" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>资产名称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="ASSETS_NAME" lay-verify="required" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>一级分类：</label>
+                                <div class="layui-input-inline">
+                                    <!-- <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input" style="width: 211px">-->
+                                    <select name="ASSETCLASS_1" lay-verify="required" id="functionCode">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>二级分类：</label>
+                                <div class="layui-input-inline">
+                                    <!-- <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input" style="width: 211px">-->
+                                    <select name="ASSETCLASS_2" lay-verify="required" id="functionCode2">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>品牌：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="BRAND" lay-verify="required" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>规格型号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="TYPE_NAME" lay-verify="required" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>数量：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="NUM" lay-verify="required|number" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>单位：</label>
+                                <div class="layui-input-inline">
+                                    <select name="UNIT" lay-verify="required" id="UNIT">
+                                        <option value="">请选择</option>
+                                    </select>
+<!--
+                                    <input type="text" name="UNIT" lay-verify="required" autocomplete="off" class="layui-input"  placeholder="请输入">
+-->
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>入账日期：</label>
+                                <div class="layui-input-inline">
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="POSTINGDATE" id="date1" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">购买日期：</label>
+                                <div class="layui-input-inline">
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="PURCHASEDATE" id="date2"  placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>质保期(年)：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="WARRANTY" lay-verify="required" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>预计使用寿命(年)：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="SERVICELIFE" lay-verify="required" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+
+                            <!--<div class="layui-inline">
+                                <label class="layui-form-label">使用部门：</label>
+                                <div class="layui-input-inline">
+                                    &lt;!&ndash; <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input" style="width: 211px">&ndash;&gt;
+                                    <select name="ATTRIBUTION" lay-verify="required" id="gsgs">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>责任人：</label>
+                                <div class="layui-input-inline">
+                                    <input type="tel" name="RESPMAN" lay-verify="required" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">购买价格（元）：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="PRICE" lay-verify="number" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span style="color:red">*</span>归属公司：</label>
+                                <div class="layui-input-inline">
+                                    <select name="COMPANY" lay-verify="required" id="COMPANY" lay-filter="COMPANY">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!--<div class="layui-inline" style="margin-bottom: 20px">
+                                <label class="layui-form-label">入库时间：</label>
+                                <div class="layui-input-inline">
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="USEDESC" id="date3" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-bottom: 20px">
+                                <label class="layui-form-label">入库人：</label>
+                                <div class="layui-input-inline">
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="phone" lay-verify="required" autocomplete="off" class="layui-input"  placeholder="请输入">
+                                    </div>
+                                </div>
+                            </div>-->
+                            <div class="layui-inline" >
+                                <label class="layui-form-label">备注：</label>
+                                <div class="layui-input-inline" >
+                                    <div class="layui-input-inline">
+                                        <textarea  class="layui-textarea"  name="USEDESC"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        <!--<div class="layui-form-item layui-form-text">
+                          <label class="layui-form-label">编辑器</label>
+                          <div class="layui-input-block">
+                            <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
+                          </div>
+                        </div>-->
+                        <div class="layui-form-item" style="text-align: center;margin-top: 30px">
+                            <div class="layui-input-block">
+                                <button type="submit" class="layui-btn" lay-submit lay-filter="reSubmit" data-type="">保存</button>
+                                <button type="button" class="layui-btn layui-btn-primary" data-type="cancel" id="cancel">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script src="../../layui/lay/modules/table.js"></script>
+<script src="../../js/jquery-3.3.1.min.js"></script>
+<script src="../../layui/lay/modules/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../layui/lay/modules/laydate.js"></script>
+<script>
+
+    layui.use(['form','element'], function(){
+        var element = layui.element;
+        var form = layui.form;
+        form.render();
+    });
+</script>
+<script>
+
+</script>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function() {
+
+        let param = new URLSearchParams(location.search);
+        //onst userName = param.get('userName');
+
+        const val1 = param.get('val1');
+        const val2 = param.get('val2');
+        const val3 = param.get('val3');
+        const val4 = param.get('val4');
+        const val5 = param.get('val5');
+        const val6 = param.get('val6');
+        const val7 = param.get('val7');
+        const val8 = param.get('val8');
+        const val9 = param.get('val9');
+        const val10 = param.get('val10');
+        const val11 = param.get('val11');
+        const val12 = param.get('val12');
+        const val13 = param.get('val13');
+        const val14 = param.get('val14');
+        const val15 = param.get('val15');
+        const val16 = param.get('val16');
+        const val17 = param.get('val17');
+        const val18 = param.get('val18');
+        const val19 = param.get('userName');
+        const val20 = param.get('val19');
+        var laydate = layui.laydate;
+        var form = layui.form;
+
+
+        /*var $ = layui.$, active = {
+            cancel: function () {
+                window.location.href = "../stockAsset.jsp?user=" + val19;
+
+            },
+        }*/
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        $('#cancel').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        $.ajax({
+            url:"../../stockAsset/selYJFL.do",
+            contentType:"application/json",
+            type:"post",
+            dataType:"json",
+            beforeSend:"",
+            data:JSON.stringify(),
+            success: function(data) {
+
+                for (var i = 0; i <data.length; i++) {
+                    $("#functionCode").append((new Option(data[i].TYPENM )));
+                    form.render();
+                }
+                $("#functionCode").val(val3);
+                form.render();
+            }
+        });
+        //下拉框数据回显
+
+        $.ajax({
+            url:"../../stockAsset/selEJFL.do",
+            contentType:"application/json",
+            type:"post",
+            dataType:"json",
+            beforeSend:"",
+            data:JSON.stringify(),
+            success: function(data) {
+
+                for (var i = 0; i <data.length; i++) {
+                    $("#functionCode2").append((new Option(data[i].TYPENM )));
+                    form.render();
+                }
+                $("#functionCode2").val(val4);
+                form.render();
+            }
+        });
+
+        $.ajax({
+            url:"../../stockAsset/selDW.do",
+            contentType:"application/json",
+            type:"post",
+            dataType:"json",
+            beforeSend:"",
+            data:JSON.stringify(),
+            success: function(data) {
+
+                for (var i = 0; i <data.length; i++) {
+                    $("#UNIT").append((new Option(data[i].TYPENM )));
+                    form.render();
+                }
+                $("#UNIT").val(val8);
+                form.render();
+            }
+        });
+        $.ajax({
+            url:"../../stockAsset/selGSGS.do?uname="+val19,
+            contentType:"application/json",
+            type:"post",
+            dataType:"json",
+            beforeSend:"",
+            data:JSON.stringify(),
+            success: function(data) {
+
+                for (var i = 0; i <data.length; i++) {
+                    $("#COMPANY").append((new Option(data[i].COMPNM )));
+                    form.render();
+                }
+                $("#COMPANY").val(val20);
+                form.render();
+            }
+        });
+        /*$.ajax({
+            url:"../../stockAsset/selBM.do",
+            contentType:"application/json",
+            type:"post",
+            dataType:"json",
+            beforeSend:"",
+            data:JSON.stringify(),
+            success: function(data) {
+                var compnms = [];
+                for (var i=0;i<data.length;i++){
+                    compnms[i] = data[i].COMPNM;
+                }
+
+                for(var i=0;i<compnms.length;i++){
+                    for(var j=i+1;j<compnms.length;j++){
+                        if(compnms[i]==compnms[j]){
+                            //如果第一个等于第二个，splice方法删除第二个
+                            compnms.splice(j,1);
+                            j--;
+                        }
+                    }
+                }
+                for (var i = 0; i <compnms.length; i++) {
+                    if (compnms[i]==null){
+                        return
+                    }else {
+                        $("#COMPANY").append(new Option(compnms[i] ));
+                        // $("#gsgs").append("<optgroup label="+compnms[i]+">");
+                        // for (var j = 0;j<data.length;j++){
+                        //    if (compnms[i] == data[j].COMPNM){
+                        //        $("#gsgs").append(" <option value='"+data[j].NAME+"'>"+data[j].NAME+"</option>");
+                        //    }
+                        // }
+                        //$("#gsgs").append("</optgroup>");
+                        form.render();
+                    }
+                }
+                $("#COMPANY").val(val20);
+                form.render();
+            }
+
+        });*/
+        laydate.render({
+            elem: '#date1' //指定元素
+            ,showBottom: false
+        });
+        laydate.render({
+            elem: '#date2' //指定元素
+            ,showBottom: false
+        });
+
+        form.val('upFrom', {
+            "ASSETS_ID":val1,
+            "ASSETS_NAME":val2,
+            "ASSETCLASS_1":val3,
+            "ASSETCLASS_2":val4,
+            "BRAND":val5,
+            "TYPE_NAME":val6,
+            "NUM":val7,
+            "UNIT":val8,
+            "POSTINGDATE":val9,
+            "PURCHASEDATE":val10,
+            "WARRANTY":val11,
+            "SERVICELIFE":val12,
+            "ATTRIBUTION":val13,
+            "RESPMAN":val14,
+            "PRICE":(val15=="null"?"":val15),
+            "LOCATION":val16,
+            "USEDESC":(val17=="null"?"":val17),
+            "COMPANY":val20
+        });
+
+        form.on('submit(reSubmit)', function (data) {
+            var parameter = data.field;
+            var indexlod = layer.load(1);
+            var parData = [{"name":"资产编号","valu1":parameter.ASSETS_ID,"valu2":val1},
+                {"name":"资产名称","valu1":parameter.ASSETS_NAME,"valu2":val2},
+                {"name":"一级分类","valu1":parameter.ASSETCLASS_1,"valu2":val3},
+                {"name":"二级分类","valu1":parameter.ASSETCLASS_2,"valu2":val4},
+                {"name":"品牌","valu1":parameter.BRAND,"valu2":val5},
+                {"name":"规格型号","valu1":parameter.TYPE_NAME,"valu2":val6},
+                {"name":"数量","valu1":parameter.NUM,"valu2":val7},
+                {"name":"单位","valu1":parameter.UNIT,"valu2":val8},
+                {"name":"入账日期","valu1":parameter.POSTINGDATE,"valu2":val9},
+                {"name":"购买日期","valu1":parameter.PURCHASEDATE,"valu2":val10},
+                {"name":"质保期(年)","valu1":parameter.WARRANTY,"valu2":val11},
+                {"name":"预计使用寿命(年)","valu1":parameter.SERVICELIFE,"valu2":val12},
+                {"name":"使用部门","valu1":parameter.ATTRIBUTION,"valu2":val13},
+                {"name":"责任人","valu1":parameter.RESPMAN,"valu2":val14},
+                {"name":"购买价格","valu1":parameter.PRICE,"valu2":val15},
+                {"name":"归属公司","valu1":parameter.COMPANY,"valu2":val20},
+                {"name":"备注","valu1":parameter.USEDESC,"valu2":val17}
+            ];
+            parameter["ID"]=val18;
+            parameter["uname"]=val19;
+            queryData('../../stockAsset/upStockAsset.do', parameter, function (red) {
+                if (red.code == '0') {
+
+                    var fieldName="";
+                    var fieldAgo='';
+                    var fieldAfter='';
+                    $.each(parData, function () {
+
+                        if (this.valu2!=this.valu1){
+                            fieldName+=this.name+","
+                            fieldAgo+=this.valu2+","
+                            fieldAfter+=this.valu1+","
+                        }
+                    });
+                    if (fieldName!=""){
+                        var strDescr = "字段名称：["+fieldName+"]/改前值："+"["+fieldAgo+"]/改后值：["+fieldAfter+"]"
+                        var param={'operType':'修改','operPage':'资产入库信息','operTable':'IT_ASSET_FIXASSET','descr':strDescr,'createName':val19}
+                        queryData('../../log/addlog.do', param, function (redt) {});
+                    }
+
+                    windowclose();
+
+                   // window.location.href = "../stockAsset.jsp?user=" + val19;
+                   // $(window).attr('location',"../stockAsset.jsp");
+                }
+                layer.alert(red.msg, {icon: 1});
+            })
+
+
+            layer.close(indexlod);
+            return false;
+        });
+
+    });
+    $("#cancel").click(function () {
+        windowclose();
+    });
+    function windowclose() {
+        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        parent.layer.close(index); //再执行关闭
+    }
+    /*$(function(){
+        $("#cancel").click(function(){
+            $(window).attr('location',"../stockAsset.jsp");
+        });
+    });*/
+</script>
+</html>
